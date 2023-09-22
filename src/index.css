@@ -67,3 +67,19 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+.MagicCard {
+  border-radius: 5px;
+  padding: 2px;
+  justify-content: center;
+}
+
+#search-display {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#magic-card {
+  display: grid;
+  grid-row: auto;  
+}

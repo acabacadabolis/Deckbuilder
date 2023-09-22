@@ -13,11 +13,13 @@ function App() {
     console.log(event.target.search.value)
     setSearch(event.target.search.value)
 
-    fetch(`https://api.scryfall.com/cards/search?q=${event.target.search.value}`)
-    .then(resp => resp.json())
-    .then(data => setMagicCards(data.data))
+    
+      fetch(`https://api.scryfall.com/cards/search?q=${event.target.search.value}`)
+      .then(resp => resp.json())
+      .then(data => setMagicCards(data.data))          
+    }
 
-  }
+  
 
   return (
     <>
