@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import "./MagicCard.css"
 
 export default function MagicCard ({ name, image_uris, card_faces}) {
 
@@ -37,8 +36,8 @@ export default function MagicCard ({ name, image_uris, card_faces}) {
 
     return (
         <div id="magic-card"
-        onMouseEnter={handleFocus}
-        onMouseLeave={handleBlur} >
+            onMouseEnter={handleFocus}
+            onMouseLeave={handleBlur} >
             {displayCard}
             {isFocus ? <button>Add to Deck</button> : null}
         </div>
