@@ -2,32 +2,28 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import Magic from './components/Magic'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [search, setSearch] = useState("")
+  const [magicCards, setMagicCards] = useState([])
+
+  function handleSubmit(event){
+    event.preventDefault()
+    console.log(event.target.search.value)
+    setSearch(event.target.search.value)
+
+    fetch(`https://api.scryfall.com/cards/search?q=${event.target.search.value}`)
+    .then(resp => resp.json())
+    .then(data => setMagicCards(data.data))
+
+  }
 
   return (
     <>
       <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        <Magic handleSubmit={handleSubmit} magicCards={magicCards}/>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   )
 }
