@@ -3,6 +3,8 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import Magic from './components/Magic'
+import Header from './components/Header'
+import { Outlet } from 'react-router-dom'
 
 function App() {
   const [search, setSearch] = useState("")
@@ -24,7 +26,9 @@ function App() {
   return (
     <>
       <div>
-        <Magic handleSubmit={handleSubmit} magicCards={magicCards}/>
+        <Header />
+        <Outlet />
+        {/* <Magic handleSubmit={handleSubmit} magicCards={magicCards}/> */}
       </div>
     </>
   )
