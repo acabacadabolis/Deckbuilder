@@ -7,9 +7,12 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import Magic from './components/Magic.jsx';
+import MagicSearch,{Search} from './components/MagicSearch.jsx';
 import Yugioh from './components/Yugioh.jsx';
 import Pokemon from './components/Pokemon.jsx';
 import ErrorPage from './components/ErrorPage.jsx';
+import MagicDeck from './components/MagicDeck.jsx';
+import SearchErrorPage from './components/SearchErrorPage.jsx';
 
 const router = createBrowserRouter([
   {
@@ -19,7 +22,23 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/Magic",
-        element: <Magic />
+        element: <Magic />,
+        loader: Search,
+        errorElement: <ErrorPage />,
+        children:[
+          {
+            path: "/Magic/search",
+            element: <MagicSearch />,
+            loader: Search,
+            errorElement:   <div>
+                                <p> Search failed</p>
+                            </div>,
+          },
+          {
+            path: "/Magic/deck",
+            element: <MagicDeck />,
+          }
+        ]
       },
       {
         path: "/YuGiOh",
