@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-export default function MagicCard ({ name, image_uris, card_faces}) {
+
+export default function MagicCard ({ id ,name, image_uris, card_faces, site}) {
 
     const [isFaces, setIsFaces] = useState(card_faces)
     const [isFocus, setIsFocus] = useState(false)
+    const navigate = useNavigate()
 
     useEffect(() =>{
         image_uris ? "" : setIsFaces(card_faces[0].image_uris.small)
@@ -14,11 +17,41 @@ export default function MagicCard ({ name, image_uris, card_faces}) {
         : setIsFaces(card_faces[0].image_uris.small)
     }
 
+    function handleAdd(){
+        let thisCard = {}
+        image_uris ?
+            thisCard = {
+                'name':name,
+                'image_uris':image_uris,
+            }
+            :
+            thisCard = {
+                'name':name,
+                'card_faces':card_faces,
+            }
+        fetch('http://localhost:3000/magic',{
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify(thisCard)
+        })
+        .then(resp => resp.json)
+        .then(data => addedCard=data)
+    }
+
+    function handleDelete(){
+        fetch(`http://localhost:3000/magic/${id}`,{
+            method:'DELETE'
+        })
+        navigate(0)
+    }
+
     const displayCard = image_uris ?
     (<img 
         src={image_uris.small} 
         alt={name} 
-        className="MagicCard" /> 
+        className=" justify-center" /> 
      ) : (
     <img src={isFaces} 
         alt={name}
@@ -35,11 +68,15 @@ export default function MagicCard ({ name, image_uris, card_faces}) {
     }
 
     return (
-        <div id="magic-card"
+        <div className=" grid"
             onMouseEnter={handleFocus}
             onMouseLeave={handleBlur} >
             {displayCard}
-            {isFocus ? <button>Add to Deck</button> : null}
+            {isFocus&&site==="search" ? <button onClick={handleAdd} className=" bg-lime-500 font-semibold hover:bg-red-600">Add to Deck</button> 
+                    :
+                isFocus&&site==="deck"? <button onClick={handleDelete} className=" bg-lime-500 font-semibold hover:bg-red-600">Remove from Deck</button>
+                    : 
+                null}
         </div>
     )
 }

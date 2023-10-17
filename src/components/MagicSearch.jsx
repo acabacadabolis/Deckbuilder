@@ -24,8 +24,8 @@ export default function MagicSearch(){
                         <input name="search" autoComplete="off" defaultValue={searchTerm}></input>
                     </label>
             </Form>
-            <div id="search-display">
-                {cardSearch ? cardSearch.data.map(magicCard => <MagicCard key={magicCard.id}{...magicCard} />) : null}
+            <div className=" flex flex-wrap">
+                {cardSearch ? cardSearch.data.map(magicCard => <MagicCard site="search" key={magicCard.id}{...magicCard} />) : null}
             </div>
         </div>
     )

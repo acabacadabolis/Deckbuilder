@@ -11,7 +11,7 @@ import MagicSearch,{Search} from './components/MagicSearch.jsx';
 import Yugioh from './components/Yugioh.jsx';
 import Pokemon from './components/Pokemon.jsx';
 import ErrorPage from './components/ErrorPage.jsx';
-import MagicDeck from './components/MagicDeck.jsx';
+import MagicDeck, { LoadDeck } from './components/MagicDeck.jsx';
 import SearchErrorPage from './components/SearchErrorPage.jsx';
 
 const router = createBrowserRouter([
@@ -30,13 +30,12 @@ const router = createBrowserRouter([
             path: "/Magic/search",
             element: <MagicSearch />,
             loader: Search,
-            errorElement:   <div>
-                                <p> Search failed</p>
-                            </div>,
+            errorElement: <div>Search Failed.</div>,
           },
           {
             path: "/Magic/deck",
             element: <MagicDeck />,
+            loader: LoadDeck
           }
         ]
       },

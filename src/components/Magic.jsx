@@ -18,8 +18,8 @@ export default function Magic() {
             <h1 className="text-3xl font-bold underline">
                 Magic: The Gathering
             </h1>
-            <Link to={"/Magic/search"}>Search</Link>
-            <Link to={"/Magic/deck"}>Deck</Link>
+            <Link className=" text-lg font-semibold mx-6" to={"/Magic/search"}>Search</Link>
+            <Link className=" text-lg font-semibold mx-6" to={"/Magic/deck"}>Deck</Link>
             <Outlet />
             
             
