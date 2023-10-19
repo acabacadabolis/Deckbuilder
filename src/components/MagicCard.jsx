@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { redirect, useActionData, useNavigate } from "react-router-dom";
 
+export async function DeleteCard(id){
+    fetch(`http://localhost:3000/magic/${id}`,{
+            method:'DELETE'
+        })
+}
 
 export default function MagicCard ({ id ,name, image_uris, card_faces, site}) {
 
@@ -68,13 +73,13 @@ export default function MagicCard ({ id ,name, image_uris, card_faces, site}) {
     }
 
     return (
-        <div className=" grid"
+        <div className=" grid group/card"
             onMouseEnter={handleFocus}
             onMouseLeave={handleBlur} >
             {displayCard}
-            {isFocus&&site==="search" ? <button onClick={handleAdd} className=" bg-lime-500 font-semibold hover:bg-red-600">Add to Deck</button> 
+            {site==="search" ? <button onClick={handleAdd} className=" invisible group-hover/card:visible bg-lime-500 font-semibold hover:bg-red-600">Add to Deck</button> 
                     :
-                isFocus&&site==="deck"? <button onClick={handleDelete} className=" bg-lime-500 font-semibold hover:bg-red-600">Remove from Deck</button>
+                site==="deck"? <button onClick={handleDelete} className="invisible group-hover/card:visible bg-lime-500 font-semibold hover:bg-red-600">Remove from Deck</button>
                     : 
                 null}
         </div>

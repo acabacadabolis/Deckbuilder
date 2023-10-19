@@ -13,6 +13,8 @@ import Pokemon from './components/Pokemon.jsx';
 import ErrorPage from './components/ErrorPage.jsx';
 import MagicDeck, { LoadDeck } from './components/MagicDeck.jsx';
 import SearchErrorPage from './components/SearchErrorPage.jsx';
+import MagicCard, { DeleteCard } from './components/MagicCard.jsx';
+import MagicDeckList from './components/MagicDeckList.jsx';
 
 const router = createBrowserRouter([
   {
@@ -31,11 +33,26 @@ const router = createBrowserRouter([
             element: <MagicSearch />,
             loader: Search,
             errorElement: <div>Search Failed.</div>,
+            children:[
+              {
+                element:<MagicCard/>,
+                loader:Search,
+                action:DeleteCard,
+              }
+            ]
           },
           {
             path: "/Magic/deck",
             element: <MagicDeck />,
-            loader: LoadDeck
+            loader: LoadDeck,
+            children:[
+              {
+                element:<MagicCard />
+              },
+              {
+                element:<MagicDeckList />
+              }
+            ]
           }
         ]
       },
