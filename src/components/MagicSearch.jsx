@@ -2,7 +2,7 @@ import React from "react";
 import { Form, useActionData, useLoaderData, useParams } from "react-router-dom";
 import MagicCard from "./MagicCard";
 
-export async function Search ({ request }) {
+export async function MagSearch ({ request }) {
     let url = new URL(request.url);
     let searchTerm = url.searchParams.get("search");
     let cardSearch

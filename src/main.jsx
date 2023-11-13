@@ -7,7 +7,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import Magic from './components/Magic.jsx';
-import MagicSearch,{Search} from './components/MagicSearch.jsx';
+import MagicSearch,{MagSearch} from './components/MagicSearch.jsx';
 import Yugioh from './components/Yugioh.jsx';
 import Pokemon from './components/Pokemon.jsx';
 import ErrorPage from './components/ErrorPage.jsx';
@@ -25,7 +25,7 @@ const router = createBrowserRouter([
       {
         path: "/Magic",
         element: <Magic />,
-        loader: Search,
+        loader: MagSearch,
         errorElement: <ErrorPage />,
         children:[
           {
@@ -36,7 +36,7 @@ const router = createBrowserRouter([
             children:[
               {
                 element:<MagicCard/>,
-                loader:Search,
+                loader:MagSearch,
                 action:DeleteCard,
               }
             ]
