@@ -6,7 +6,7 @@ export default function Header () {
         <div className="flex space-x-4 justify-center">
             <Link to={"/Magic"}>Magic</Link>
             <Link to={"/Pokemon"}>Pokemon</Link>
-            <Link to={"/YuGiOh"}>Yugioh</Link>
+            <Link to={"/Yugioh"}>Yugioh</Link>
         </div>
     )
 }

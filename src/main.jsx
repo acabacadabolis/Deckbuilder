@@ -15,6 +15,8 @@ import MagicDeck, { LoadDeck } from './components/MagicDeck.jsx';
 import SearchErrorPage from './components/SearchErrorPage.jsx';
 import MagicCard, { DeleteCard } from './components/MagicCard.jsx';
 import MagicDeckList from './components/MagicDeckList.jsx';
+import YugiohSearch, { YgoSearch } from './components/YugiohSearch.jsx';
+import YugiohCard from './components/YugiohCard.jsx';
 
 const router = createBrowserRouter([
   {
@@ -31,7 +33,7 @@ const router = createBrowserRouter([
           {
             path: "/Magic/search",
             element: <MagicSearch />,
-            loader: Search,
+            loader: MagSearch,
             errorElement: <div>Search Failed.</div>,
             children:[
               {
@@ -57,8 +59,23 @@ const router = createBrowserRouter([
         ]
       },
       {
-        path: "/YuGiOh",
-        element: <Yugioh />
+        path: "/Yugioh",
+        element: <Yugioh />,
+        loader: YgoSearch,
+        errorElement: <ErrorPage />,
+        children:[
+          {
+            path: "/Yugioh/search",
+            element: <YugiohSearch />,
+            loader: YgoSearch,
+            children:[
+              {
+                element:<YugiohCard/>,
+                loader: YgoSearch,
+              }
+            ]
+          }
+        ]
       },
       {
         path: "/Pokemon",
