@@ -19,15 +19,14 @@ export default function YugiohSearch(){
 
     return (
         <div>
-            <h1>This yugioh search</h1>
-            {/* <Form method="get" className=" border-2 border-red-900" >
+            <Form method="get" className=" border-2 border-red-900" >
                     <label htmlFor="search" >Search :</label>
                     <input name="search" autoComplete="off" defaultValue={searchTerm}></input>
                     
             </Form>
             <div className=" flex flex-wrap">
                 {cardSearch ? cardSearch.data.map(ygoCard => <YugiohCard site="search" key={ygoCard.id}{...ygoCard} />) : null}
-            </div> */}
+            </div>
         </div>
     )
 }
