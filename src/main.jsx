@@ -11,12 +11,13 @@ import MagicSearch,{MagSearch} from './components/MagicSearch.jsx';
 import Yugioh from './components/Yugioh.jsx';
 import Pokemon from './components/Pokemon.jsx';
 import ErrorPage from './components/ErrorPage.jsx';
-import MagicDeck, { LoadDeck } from './components/MagicDeck.jsx';
+import MagicDeck, { MagLoadDeck } from './components/MagicDeck.jsx';
 import SearchErrorPage from './components/SearchErrorPage.jsx';
 import MagicCard, { DeleteCard } from './components/MagicCard.jsx';
 import MagicDeckList from './components/MagicDeckList.jsx';
 import YugiohSearch, { YgoSearch } from './components/YugiohSearch.jsx';
 import YugiohCard from './components/YugiohCard.jsx';
+import YugiohDeck, { YgoLoadDeck } from './components/YugiohDeck.jsx';
 
 const router = createBrowserRouter([
   {
@@ -46,7 +47,7 @@ const router = createBrowserRouter([
           {
             path: "/Magic/deck",
             element: <MagicDeck />,
-            loader: LoadDeck,
+            loader: MagLoadDeck,
             children:[
               {
                 element:<MagicCard />
@@ -72,6 +73,19 @@ const router = createBrowserRouter([
               {
                 element:<YugiohCard/>,
                 loader: YgoSearch,
+              }
+            ]
+          },
+          {
+            path: "/Yugioh/deck",
+            element: <YugiohDeck />,
+            loader: YgoLoadDeck,
+            children:[
+              {
+                element:<YugiohCard />
+              },
+              {
+                element:<MagicDeckList />
               }
             ]
           }

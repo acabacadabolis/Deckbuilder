@@ -1,12 +1,12 @@
 import React from "react";
 import { useLoaderData, useNavigate } from "react-router-dom";
 
-export default function MagicDeckList({deck}){
+export default function MagicDeckList({deck, site}){
     const navigate = useNavigate()
 
     function handleDelete(e){
         console.log(e.target.id)
-        fetch(`http://localhost:3000/magic/${e.target.id}`,{
+        fetch(`http://localhost:3000/${site}/${e.target.id}`,{
             method:'DELETE'
         })
         navigate(0)

@@ -24,7 +24,7 @@ export default function YugiohSearch(){
                     <input name="search" autoComplete="off" defaultValue={searchTerm}></input>
                     
             </Form>
-            <div className=" flex flex-wrap">
+            <div className=" flex shrink flex-wrap">
                 {cardSearch ? cardSearch.data.map(ygoCard => <YugiohCard site="search" key={ygoCard.id}{...ygoCard} />) : null}
             </div>
         </div>
