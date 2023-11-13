@@ -15,7 +15,7 @@ export default function MagicDeckList({deck}){
     
     return(
     
-            <ul className=" inset-x-0 left-0 outline-black outline-8 bg-slate-300">
+            <ul className=" inset-x-0 h-96 w-48 left-0 bg-slate-300">
                 {deck ? 
                 deck.map(card => 
                     <div className=" flex group/edit ">

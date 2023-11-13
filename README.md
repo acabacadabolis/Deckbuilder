@@ -1,8 +1,15 @@
-# React + Vite
+Deckbuilder Website for vairous cards games
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Users can use the site without logging in, can search cards and view other users decks but cannot make a deck without logging in.
 
-Currently, two official plugins are available:
+Pulls from an API search for each game to find cards from that game. Choose to add cards from that search to their current deck for that game.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Current deck will display total count of cards added to the deck and each individual card in the deck.
+
+React front end with sql=alchemy made back end.
+
+Base games will be Magic: the Gathering and Yu-Gi-Oh
+
+Strech Goals:
+    Add Pokemon TCG
+    Cards in the deck would populate a shopping cart.
