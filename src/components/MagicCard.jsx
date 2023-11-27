@@ -73,7 +73,7 @@ export default function MagicCard ({ id ,name, image_uris, card_faces, site}) {
     }
 
     return (
-        <div className=" grid group/card"
+        <div className=" grid group/card content-center"
             onMouseEnter={handleFocus}
             onMouseLeave={handleBlur} >
             {displayCard}

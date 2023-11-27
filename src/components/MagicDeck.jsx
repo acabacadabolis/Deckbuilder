@@ -16,7 +16,7 @@ export default function MagicDeck(){
     return (
         <div className=" flex">
             <MagicDeckList site="magic" deck={dek.CurrentDeck}/>
-            <div className=" flex flex-wrap justify-center">
+            <div className=" flex flex-wrap justify-center content-start">
                 {dek ? dek.CurrentDeck.map(magicCard => <MagicCard site="deck" key={magicCard.id}{...magicCard} />) : null}
             </div>
         </div>

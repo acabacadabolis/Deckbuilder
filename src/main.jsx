@@ -6,6 +6,7 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
+import Signup from './components/Signup.jsx'
 import Magic from './components/Magic.jsx';
 import MagicSearch,{MagSearch} from './components/MagicSearch.jsx';
 import Yugioh from './components/Yugioh.jsx';
@@ -18,6 +19,7 @@ import MagicDeckList from './components/MagicDeckList.jsx';
 import YugiohSearch, { YgoSearch } from './components/YugiohSearch.jsx';
 import YugiohCard from './components/YugiohCard.jsx';
 import YugiohDeck, { YgoLoadDeck } from './components/YugiohDeck.jsx';
+import Login from './components/Login.jsx';
 
 const router = createBrowserRouter([
   {
@@ -94,6 +96,14 @@ const router = createBrowserRouter([
       {
         path: "/Pokemon",
         element: <Pokemon />
+      },
+      {
+        path: "/Login",
+        element: <Login />
+      },
+      {
+        path: "/Signup",
+        element: <Signup />
       }
     ]
   }
