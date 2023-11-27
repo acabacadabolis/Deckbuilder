@@ -33,6 +33,21 @@ class User(db.Model, SerializerMixin):
 
     mtgdecks = db.relationship('MtgDeck', back_populates='user')
 
+    @hybrid_property
+    def password_hash(self):
+        return self._pass_hash
+    
+    @password_hash.setter
+    def password_hash(self, new_pass):
+        pass_hash = bcrypt.generate_password_hash(new_pass.encode('utf-8'))
+        self._password_hash = pass_hash.decode('utf-8')
+
+    def authenticate(self, password):
+        return bcrypt.check_password_hash(
+            self._password_hash,
+            password.encode('utf-8')
+        )
+
 class MtgDeck(db.Model, SerializerMixin):
     __tablename__ = 'mtgdecks'
 
@@ -40,7 +55,6 @@ class MtgDeck(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
-    type = db.Column(db.String, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     user = db.relationship('User', back_populates='mtgdecks')

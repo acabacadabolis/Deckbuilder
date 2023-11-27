@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useLoaderData } from "react-router-dom";
 import MagicCard from "./MagicCard";
 import MagicDeckList from "./MagicDeckList";
 
-export async function MagLoadDeck(){
+export async function MagLoadDeck() {
     let CurrentDeck
     await fetch(`http://localhost:3000/magic`)
     .then(resp => resp.json())
@@ -13,6 +13,7 @@ export async function MagLoadDeck(){
 
 export default function MagicDeck(){
     const dek = useLoaderData()
+    
     return (
         <div className=" flex">
             <MagicDeckList site="magic" deck={dek.CurrentDeck}/>
