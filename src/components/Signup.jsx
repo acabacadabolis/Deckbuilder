@@ -1,13 +1,12 @@
 import { useState } from "react"
-import { Outlet, Link, useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom"
 
-
-export default function Signup() {
+export default function Signup(){
     const blankForm = {
         "username": "",
         "password": "",
-        "name":"",
-        "email":""
+        "name": "",
+        "email": ""
     }
 
     const navigate = useNavigate()
@@ -16,31 +15,31 @@ export default function Signup() {
     function handleChange(event) {
         setFormData(prevFormData => {
             return {
-                ...prevFormData, // this needs to happen first
+                ...prevFormData, 
                 [event.target.name]: event.target.value
             }
         })
     }
     function handleSubmit(event){
         event.preventDefault()
-
-        fetch("http://127.0.0.1:5555/login", {
+        console.log(formData)
+        fetch("http://127.0.0.1:5555/signup", {
             method:'POST',
             headers:{
                 'Content-Type':'application/json'
             },
             body:JSON.stringify(formData)
         })
-        .then(resp => resp.json())
-        .then(data => setUser(data))
+        .then(resp => resp.json)
+        // .then(data => console.log(data))
+        
         setFormData(blankForm)
-        navigate("/")
-    
+        navigate("/login")
     }
 
-    return(
+    return (
         <div>
-            <h1>LOGIN</h1>
+            <h1>SIGNUP</h1>
             <form className=" grid justify-start text-left"onSubmit={handleSubmit}>
                 <div>
                 <label htmlFor="username">Username:</label>
@@ -62,5 +61,4 @@ export default function Signup() {
             </form>
         </div>
     )
-  
 }
