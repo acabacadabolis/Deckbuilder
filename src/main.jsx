@@ -20,6 +20,7 @@ import YugiohSearch, { YgoSearch } from './components/YugiohSearch.jsx';
 import YugiohCard from './components/YugiohCard.jsx';
 import YugiohDeck, { YgoLoadDeck } from './components/YugiohDeck.jsx';
 import Login from './components/Login.jsx';
+import MagicDeckCard from './components/MagicDeckCard';
 
 const router = createBrowserRouter([
   {
@@ -52,7 +53,7 @@ const router = createBrowserRouter([
             loader: MagLoadDeck,
             children:[
               {
-                element:<MagicCard />
+                element:<MagicDeckCard />
               },
               {
                 element:<MagicDeckList />
@@ -99,7 +100,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/Login",
-        element: <Login />
+        element: <Login />,
       },
       {
         path: "/Signup",

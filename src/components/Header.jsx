@@ -3,8 +3,14 @@ import { NavLink, Link } from "react-router-dom";
 
 
 
-export default function Header () {
+export default function Header ({user, setUser}) {
 
+    function handleLogout(event){
+        setUser(null)
+        fetch("http://127.0.0.1:5555/logout", {
+            method:'DELETE'
+        })
+    }
 
     return(
         <div className="flex m-auto">
@@ -14,7 +20,7 @@ export default function Header () {
             <Link to={"/Yugioh"}>Yugioh</Link>
         </div>
         <div className=" text-right">
-            <Link to={"/Login"}>Login</Link>
+            {user === null?<Link to={"/Login"}>Login</Link>:<button onClick={handleLogout}>Logout</button>}
         </div>
         </div>
     )

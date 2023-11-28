@@ -23,7 +23,7 @@ bcrypt = Bcrypt()
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
-    serialize_rules = ('-mtgdecks.user',)
+    serialize_rules = ('-mtgdecks.user','-yugidecks.user')
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
@@ -32,6 +32,7 @@ class User(db.Model, SerializerMixin):
     email = db.Column(db.String, nullable=False)
 
     mtgdecks = db.relationship('MtgDeck', back_populates='user')
+    yugidecks = db.relationship('YugiDeck', back_populates='user')
 
     @hybrid_property
     def password_hash(self):
@@ -60,10 +61,6 @@ class MtgDeck(db.Model, SerializerMixin):
     user = db.relationship('User', back_populates='mtgdecks')
     cards = db.relationship('MtgDeckCard', back_populates='deck')
 
-    def get_cards(self):
-        actCards = [card.card.to_dict() for card in self.cards]
-        return actCards
-
 class MtgDeckCard(db.Model, SerializerMixin):
     __tablename__ = 'mtgdeckcards'
 
@@ -80,7 +77,7 @@ class MtgDeckCard(db.Model, SerializerMixin):
 class MtgCard(db.Model, SerializerMixin):
     __tablename__ = 'mtgcards'
 
-    serialize_rules = ('-card_faces.card',)
+    serialize_rules = ('-card_faces.card','-decks')
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
@@ -91,27 +88,45 @@ class MtgCard(db.Model, SerializerMixin):
 class CardFace(db.Model, SerializerMixin):
     __tablename__ = 'cardfaces'
 
-    serialize_rules = ('-card.card_faces','-decks.cards')
+    serialize_rules = ('-card.card_faces',)
+
+    id = db.Column(db.Integer, primary_key=True)
+    image = db.Column(db.String, nullable=False)
+    card_id = db.Column(db.Integer, db.ForeignKey('mtgcards.id'))
+
+    card = db.relationship('MtgCard', back_populates='card_faces')
+
+class YugiDeck (db.Model, SerializerMixin):
+    __tablename__ = 'yugidecks'
+
+    serialize_rules = ('-user.yugidecks','-yugi_cards.yugi_deck')
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
-    card_id = db.Column(db.Integer, db.ForeignKey('mtgcards.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
-    image_uris = db.relationship('Imageurls', back_populates='card')
-    card = db.relationship('MtgCard', back_populates='card_faces')
+    user = db.relationship('User', back_populates='yugidecks')
+    yugi_cards = db.relationship('YugiDeckCard', back_populates='yugi_deck')
 
-class Imageurls(db.Model, SerializerMixin):
-    __tablename__ = 'imageurls'
+class YugiDeckCard(db.Model, SerializerMixin):
+    __tablename__ = 'yugideckcards'
 
-    serialize_rules = ('-card.image_uris',)
+    serialize_rules = ('-yugi_deck.cards','-yugi_card.decks')
 
     id = db.Column(db.Integer, primary_key=True)
-    small = db.Column(db.String)
-    normal = db.Column(db.String)
-    large = db.Column(db.String)
-    png = db.Column(db.String)
-    art_crop = db.Column(db.String)
-    border_crop = db.Column(db.String)
-    card_id = db.Column(db.Integer, db.ForeignKey('cardfaces.id'))
+    deck_id = db.Column(db.Integer, db.ForeignKey('yugidecks.id'))
+    yugicard_id = db.Column(db.Integer, db.ForeignKey('yugicards.id'))
 
-    card = db.relationship('CardFace', back_populates='image_uris')
+    yugi_deck = db.relationship('YugiDeck', back_populates='yugi_cards')
+    yugi_card = db.relationship('YugiCard', back_populates='yugi_decks')
+
+class YugiCard(db.Model, SerializerMixin):
+    __tablename__ = 'yugicards'
+
+    serialize_rules = ('-yugi_decks.yugi_card',)
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, nullable=False)
+    image = db.Column(db.String, nullable=False)
+
+    yugi_decks = db.relationship('YugiDeckCard', back_populates='yugi_card')

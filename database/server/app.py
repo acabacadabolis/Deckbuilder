@@ -1,4 +1,4 @@
-from model import db, User, MtgCard, MtgDeck, MtgDeckCard
+from model import db, User, MtgCard, MtgDeck, MtgDeckCard, CardFace, YugiCard, YugiDeck, YugiDeckCard
 from flask_migrate import Migrate
 from flask import Flask, request, make_response, session
 from flask_restful import Api, Resource
@@ -14,7 +14,7 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = os.environ.get("SECRET_KEY")
-CORS(app)
+CORS(app,supports_credentials=True)
 
 migrate = Migrate(app, db)
 
@@ -23,6 +23,12 @@ db.init_app(app)
 @app.route('/')
 def home():
     return '<h1>Phase 5 Project</h1>'
+
+@app.route('/logout', methods=['DELETE'])
+def logout():
+    if "user_id" in session:
+        session.pop('user_id')
+    return {'message': 'logged out'}, 200
 
 @app.route('/signup', methods=['POST'])
 def all_users():
@@ -74,10 +80,36 @@ def all_mtg_decks():
     body = [deck.to_dict() for deck in MtgDeck.query.filter(MtgDeck.user_id == user.id).all()]
     return body, 200
 
-@app.route('/mtgcards')
+@app.route('/mtgcards', methods=['POST'])
 def all_mtg_cards():
 
     data = request.get_json()
+    if 'card_faces' in data:
+        try:
+            new_card = MtgCard(name =data.get('name'))
+            new_deck_card = MtgDeckCard(deck = MtgDeck.query.filter(MtgDeck.id == data.get('deckid')).first(), card = new_card)
+            new_cf = CardFace(card = new_card, image = data['image_uris'][0]['image_uris']['small'])
+            new_cb = CardFace(card = new_card, image = data['image_uris'][1]['image_uris']['small'])
+        except ValueError as e:
+            return {'error':str(e)}, 400
+        db.session.add(new_card)
+        db.session.add(new_deck_card)
+        db.session.add(new_cf)
+        db.session.add(new_cb)
+        db.session.commit()
 
-    body = [card.to_dict() for card in MtgCard.query.filter().all()]
-    return body, 200
+        return new_card.to_dict(), 201
+    
+    elif 'card_faces' not in data:
+        try:
+            new_card = MtgCard(name =data.get('name'))
+            new_deck_card = MtgDeckCard(deck = MtgDeck.query.filter(MtgDeck.id == data.get('deckid').first()), card = new_card)
+            new_cf = CardFace(card = new_card, image = data['image_uris']['small'])
+        except ValueError as e:
+            return {'error':str(e)}, 400
+        db.session.add(new_card)
+        db.session.add(new_deck_card)
+        db.session.add(new_cf)
+        db.session.commit()
+
+        return new_card.to_dict(), 201

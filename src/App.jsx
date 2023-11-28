@@ -8,12 +8,15 @@ import { Outlet } from 'react-router-dom'
 
 function App() { 
   const [user, setUser]= useState(null)
+  const [mtgDeck, setMtgDeck] = useState([])
+  const [yugiDeck, setYugiDeck] = useState([])
+  
 
   return (
     <>
       <div>
-        <Header />
-        <Outlet />
+        <Header user={user} setUser={setUser} setMtgDeck={setMtgDeck} setYugiDeck={setYugiDeck} />
+        <Outlet context={{user, setUser, mtgDeck, setMtgDeck, yugiDeck, setYugiDeck}} />
         {/* <Magic handleSubmit={handleSubmit} magicCards={magicCards}/> */}
       </div>
     </>

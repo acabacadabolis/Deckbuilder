@@ -7,13 +7,14 @@ export async function DeleteCard(id){
         })
 }
 
-export default function MagicCard ({ id ,name, image_uris, card_faces, site}) {
+export default function MagicCard ({ deckid, setMtgDeck, id ,name, image_uris, card_faces}) {
 
     const [isFaces, setIsFaces] = useState(card_faces)
     const [isFocus, setIsFocus] = useState(false)
     const navigate = useNavigate()
     useEffect(() =>{
         image_uris ? "" : setIsFaces(card_faces[0].image_uris.small)
+
     },[])
 
     function handleClick(){
@@ -27,11 +28,14 @@ export default function MagicCard ({ id ,name, image_uris, card_faces, site}) {
             thisCard = {
                 'name':name,
                 'image_uris':image_uris,
+                'deck_id':deckid,
             }
             :
             thisCard = {
                 'name':name,
-                'card_faces':card_faces,
+                'card_faces':card_faces.length,
+                'image_uris':card_faces,
+                'deck_id':deckid,
             }
         fetch('http://localhost:3000/magic',{
             method:'POST',
@@ -41,14 +45,7 @@ export default function MagicCard ({ id ,name, image_uris, card_faces, site}) {
             body:JSON.stringify(thisCard)
         })
         .then(resp => resp.json)
-        .then(data => addedCard=data)
-    }
-
-    function handleDelete(){
-        fetch(`http://localhost:3000/magic/${id}`,{
-            method:'DELETE'
-        })
-        navigate(0)
+        .then(data => setMtgDeck(prevDeck => [...prevDeck, data]))
     }
 
     const displayCard = image_uris ?
@@ -76,11 +73,7 @@ export default function MagicCard ({ id ,name, image_uris, card_faces, site}) {
             onMouseEnter={handleFocus}
             onMouseLeave={handleBlur} >
             {displayCard}
-            {site==="search" ? <button onClick={handleAdd} className=" invisible group-hover/card:visible bg-lime-500 font-semibold hover:bg-red-600">Add to Deck</button> 
-                    :
-                site==="deck"? <button onClick={handleDelete} className="invisible group-hover/card:visible bg-lime-500 font-semibold hover:bg-red-600">Remove from Deck</button>
-                    : 
-                null}
+            <button onClick={handleAdd} className=" invisible group-hover/card:visible bg-lime-500 font-semibold hover:bg-red-600">Add to Deck</button>
         </div>
     )
 }

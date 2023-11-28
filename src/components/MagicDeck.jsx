@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useLoaderData } from "react-router-dom";
-import MagicCard from "./MagicCard";
+import { useLoaderData, useOutletContext } from "react-router-dom";
+import MagicDeckCard from "./MagicDeckCard";
 import MagicDeckList from "./MagicDeckList";
 
 export async function MagLoadDeck() {
@@ -13,28 +13,19 @@ export async function MagLoadDeck() {
 
 export default function MagicDeck() {
     const dek = useLoaderData()
-    const [deck, setDeck] = useState(null)
     
-    useEffect(()=>{
-        fetch('http://127.0.0.1:5555/mtgdecks')
-        .then((response) => {
-            if(response.ok) {
-                response.json.then((data) => console.log(data))
-            }
-        })
-    },[])
+    const {user, mtgDeck, setMtgDeck} = useOutletContext()
     
     return (
         <div className=" flex">
-            <div>
+            <div> 
                 <select>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
+                    {user.mtgdecks.length !== 0? user.mtgdecks.map(deck => <option value={deck.id}>{deck.id}</option>):<option value="new deck">New Deck</option>}
                 </select>
-                <MagicDeckList site="magic" deck={dek.CurrentDeck}/>
+                <MagicDeckList deck={mtgDeck}/>
             </div>
             <div className=" flex flex-wrap justify-center content-start">
-                {dek ? dek.CurrentDeck.map(magicCard => <MagicCard site="deck" key={magicCard.id}{...magicCard} />) : null}
+                {mtgDeck.map(magicCard => <MagicDeckCard setMtgDeck={setMtgDeck} deckid={mtgDeck.id} key={magicCard.id}{...magicCard} />)}
             </div>
         </div>
     )
