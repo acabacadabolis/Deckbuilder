@@ -20,7 +20,7 @@ import YugiohSearch, { YgoSearch } from './components/YugiohSearch.jsx';
 import YugiohCard from './components/YugiohCard.jsx';
 import YugiohDeck, { YgoLoadDeck } from './components/YugiohDeck.jsx';
 import Login from './components/Login.jsx';
-import MagicDeckCard from './components/MagicDeckCard';
+import MagicDeckCard from './components/MagicDeckCard.jsx';
 
 const router = createBrowserRouter([
   {
