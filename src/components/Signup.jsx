@@ -22,7 +22,6 @@ export default function Signup(){
     }
     function handleSubmit(event){
         event.preventDefault()
-        console.log(formData)
         fetch("http://127.0.0.1:5555/signup", {
             method:'POST',
             headers:{

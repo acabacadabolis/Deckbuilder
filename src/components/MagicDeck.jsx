@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import MagicCard from "./MagicCard";
 import MagicDeckList from "./MagicDeckList";
@@ -11,11 +11,17 @@ export async function MagLoadDeck() {
     return {CurrentDeck}
 }
 
-export default function MagicDeck(){
+export default function MagicDeck() {
     const dek = useLoaderData()
-
+    const [deck, setDeck] = useState(null)
+    
     useEffect(()=>{
-        fetch('http://localhost:5555/mtgdecks')
+        fetch('http://127.0.0.1:5555/mtgdecks')
+        .then((response) => {
+            if(response.ok) {
+                response.json.then((data) => console.log(data))
+            }
+        })
     },[])
     
     return (

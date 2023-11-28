@@ -1,8 +1,11 @@
 import { useState } from "react"
 import { Outlet, Link, useNavigate } from "react-router-dom";
 
+export async function UserState(){
+    
+}
 
-export default function Signup() {
+export default function Login() {
     const blankForm = {
         "username": "",
         "password": "",
@@ -30,7 +33,7 @@ export default function Signup() {
             body:JSON.stringify(formData)
         })
         .then(resp => resp.json())
-        .then(data => setUser(data))
+        .then(data => console.log(data))
         setFormData(blankForm)
         navigate("/")
     

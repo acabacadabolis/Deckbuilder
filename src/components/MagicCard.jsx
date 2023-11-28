@@ -12,7 +12,6 @@ export default function MagicCard ({ id ,name, image_uris, card_faces, site}) {
     const [isFaces, setIsFaces] = useState(card_faces)
     const [isFocus, setIsFocus] = useState(false)
     const navigate = useNavigate()
-
     useEffect(() =>{
         image_uris ? "" : setIsFaces(card_faces[0].image_uris.small)
     },[])
