@@ -13,10 +13,20 @@ export async function MagLoadDeck() {
 
 export default function MagicDeck(){
     const dek = useLoaderData()
+
+    useEffect(()=>{
+        fetch('http://localhost:5555/mtgdecks')
+    },[])
     
     return (
         <div className=" flex">
-            <MagicDeckList site="magic" deck={dek.CurrentDeck}/>
+            <div>
+                <select>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                </select>
+                <MagicDeckList site="magic" deck={dek.CurrentDeck}/>
+            </div>
             <div className=" flex flex-wrap justify-center content-start">
                 {dek ? dek.CurrentDeck.map(magicCard => <MagicCard site="deck" key={magicCard.id}{...magicCard} />) : null}
             </div>

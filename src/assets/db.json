@@ -118,6 +118,24 @@
         }
       ],
       "id": 3
+    },
+    {
+      "name": "Stardust Dragon",
+      "card_images": [
+        {
+          "id": 44508094,
+          "image_url": "https://images.ygoprodeck.com/images/cards/44508094.jpg",
+          "image_url_small": "https://images.ygoprodeck.com/images/cards_small/44508094.jpg",
+          "image_url_cropped": "https://images.ygoprodeck.com/images/cards_cropped/44508094.jpg"
+        },
+        {
+          "id": 44508095,
+          "image_url": "https://images.ygoprodeck.com/images/cards/44508095.jpg",
+          "image_url_small": "https://images.ygoprodeck.com/images/cards_small/44508095.jpg",
+          "image_url_cropped": "https://images.ygoprodeck.com/images/cards_cropped/44508095.jpg"
+        }
+      ],
+      "id": 4
     }
   ]
 }
