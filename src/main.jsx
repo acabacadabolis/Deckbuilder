@@ -12,7 +12,7 @@ import MagicSearch,{MagSearch} from './components/MagicSearch.jsx';
 import Yugioh from './components/Yugioh.jsx';
 import Pokemon from './components/Pokemon.jsx';
 import ErrorPage from './components/ErrorPage.jsx';
-import MagicDeck, { MagLoadDeck } from './components/MagicDeck.jsx';
+import MagicDeck from './components/MagicDeck.jsx';
 import SearchErrorPage from './components/SearchErrorPage.jsx';
 import MagicCard, { DeleteCard } from './components/MagicCard.jsx';
 import MagicDeckList from './components/MagicDeckList.jsx';
@@ -50,7 +50,6 @@ const router = createBrowserRouter([
           {
             path: "/Magic/deck",
             element: <MagicDeck />,
-            loader: MagLoadDeck,
             children:[
               {
                 element:<MagicDeckCard />

@@ -1,5 +1,5 @@
 import { useState } from "react"
-import {useNavigate} from "react-router-dom"
+import {useNavigate, useOutletContext} from "react-router-dom"
 
 export default function Signup(){
     const blankForm = {
@@ -8,6 +8,7 @@ export default function Signup(){
         "name": "",
         "email": ""
     }
+    
 
     const navigate = useNavigate()
     const [formData, setFormData] = useState(blankForm)
@@ -29,11 +30,16 @@ export default function Signup(){
             },
             body:JSON.stringify(formData)
         })
-        .then(resp => resp.json)
-        // .then(data => console.log(data))
+        .then((response) => {
+            if(response.ok) {
+                response.json().then((data) => {
+                    setFormData(blankForm)
+                    navigate("/login")
+                })
+            }
+        })
         
-        setFormData(blankForm)
-        navigate("/login")
+        
     }
 
     return (

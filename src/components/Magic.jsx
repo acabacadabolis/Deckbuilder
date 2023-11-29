@@ -13,6 +13,7 @@ import { Outlet, Link, useOutletContext } from "react-router-dom";
 
 export default function Magic() {
     const {user, mtgDeck, setMtgDeck} = useOutletContext()
+    
     return (
         <div >
             <h1 className="text-3xl font-bold underline">

@@ -31,8 +31,8 @@ class User(db.Model, SerializerMixin):
     _password_hash = db.Column(db.String)
     email = db.Column(db.String, nullable=False)
 
-    mtgdecks = db.relationship('MtgDeck', back_populates='user')
-    yugidecks = db.relationship('YugiDeck', back_populates='user')
+    mtgdecks = db.relationship('MtgDeck', cascade="all, delete", back_populates='user')
+    yugidecks = db.relationship('YugiDeck', cascade="all, delete", back_populates='user')
 
     @hybrid_property
     def password_hash(self):
@@ -59,7 +59,7 @@ class MtgDeck(db.Model, SerializerMixin):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     user = db.relationship('User', back_populates='mtgdecks')
-    cards = db.relationship('MtgDeckCard', back_populates='deck')
+    cards = db.relationship('MtgDeckCard', cascade="all, delete", back_populates='deck')
 
 class MtgDeckCard(db.Model, SerializerMixin):
     __tablename__ = 'mtgdeckcards'
@@ -82,8 +82,8 @@ class MtgCard(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
 
-    decks = db.relationship('MtgDeckCard', back_populates='card')
-    card_faces = db.relationship('CardFace', back_populates='card')
+    decks = db.relationship('MtgDeckCard', cascade="all, delete", back_populates='card')
+    card_faces = db.relationship('CardFace', cascade="all, delete",back_populates='card')
     
 class CardFace(db.Model, SerializerMixin):
     __tablename__ = 'cardfaces'
@@ -106,7 +106,7 @@ class YugiDeck (db.Model, SerializerMixin):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     user = db.relationship('User', back_populates='yugidecks')
-    yugi_cards = db.relationship('YugiDeckCard', back_populates='yugi_deck')
+    yugi_cards = db.relationship('YugiDeckCard', cascade="all, delete", back_populates='yugi_deck')
 
 class YugiDeckCard(db.Model, SerializerMixin):
     __tablename__ = 'yugideckcards'
@@ -129,4 +129,4 @@ class YugiCard(db.Model, SerializerMixin):
     name = db.Column(db.String, nullable=False)
     image = db.Column(db.String, nullable=False)
 
-    yugi_decks = db.relationship('YugiDeckCard', back_populates='yugi_card')
+    yugi_decks = db.relationship('YugiDeckCard', cascade="all, delete", back_populates='yugi_card')

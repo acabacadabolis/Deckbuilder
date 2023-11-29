@@ -39,12 +39,16 @@ def all_users():
             username = data['username'], 
             email = data['email'])
         new_user.password_hash = data.get('password')
+        new_mtg = MtgDeck(name = 'New Deck', user = new_user)
+        new_ygo = YugiDeck(name = 'New Deck', user = new_user)
     except ValueError as e:
         return {'error':str(e)}, 400
     db.session.add(new_user)
+    db.session.add(new_mtg)
+    db.session.add(new_ygo)
     db.session.commit()
 
-    return {'message':f'{new_user.username} added'}, 201
+    return new_user.to_dict(), 201
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -87,7 +91,7 @@ def all_mtg_cards():
     if 'card_faces' in data:
         try:
             new_card = MtgCard(name =data.get('name'))
-            new_deck_card = MtgDeckCard(deck = MtgDeck.query.filter(MtgDeck.id == data.get('deckid')).first(), card = new_card)
+            new_deck_card = MtgDeckCard(deck = MtgDeck.query.filter(MtgDeck.id == data['deck_id']).first(), card = new_card)
             new_cf = CardFace(card = new_card, image = data['image_uris'][0]['image_uris']['small'])
             new_cb = CardFace(card = new_card, image = data['image_uris'][1]['image_uris']['small'])
         except ValueError as e:
@@ -98,12 +102,12 @@ def all_mtg_cards():
         db.session.add(new_cb)
         db.session.commit()
 
-        return new_card.to_dict(), 201
+        return new_deck_card.to_dict(), 201
     
     elif 'card_faces' not in data:
         try:
             new_card = MtgCard(name =data.get('name'))
-            new_deck_card = MtgDeckCard(deck = MtgDeck.query.filter(MtgDeck.id == data.get('deckid').first()), card = new_card)
+            new_deck_card = MtgDeckCard(deck = MtgDeck.query.filter(MtgDeck.id == data['deck_id']).first(), card = new_card)
             new_cf = CardFace(card = new_card, image = data['image_uris']['small'])
         except ValueError as e:
             return {'error':str(e)}, 400
@@ -112,4 +116,58 @@ def all_mtg_cards():
         db.session.add(new_cf)
         db.session.commit()
 
-        return new_card.to_dict(), 201
+        return new_deck_card.to_dict(), 201
+
+@app.route('/mtgcards/<int:id>', methods=['DELETE'])
+def mtg_card_by_id(id):
+    card = MtgCard.query.filter(MtgCard.id == id).first()
+
+    if not card:
+        return {'msg':"card not found"}, 400
+    
+    if request.method == 'DELETE':
+        db.session.delete(card)
+        db.session.commit()
+        
+        return {}, 204
+    
+@app.route('/ygodecks')
+def all_ygo_decks():
+    user_id = session.get('user_id')
+    user = User.query.filter(User.id == user_id).first()
+
+    if not user:
+        # invalid cookie
+        return {'message': 'invalid session'}, 401
+    
+    body = [deck.to_dict() for deck in YugiDeck.query.filter(YugiDeck.user_id == user.id).all()]
+    return body, 200
+
+@app.route('/ygocards', methods=['POST'])
+def all_ygo_cards():
+    data = request.json()
+    try:
+        new_card = YugiCard( name = data['name'], image = data['image'])
+        new_deck_card = YugiDeckCard( card = new_card, deck = YugiDeck.query.filter(YugiDeck.id == data['deck_id']).first())
+    except ValueError as e:
+        return {'error':str(e)}, 400
+    
+    db.session.add(new_card)
+    db.session.add(new_deck_card)
+    db.session.commit()
+
+    return new_deck_card.to_dict(), 201
+
+@app.route('/ygocards/<int:id>', methods=['DELETE'])
+def ygo_card_by_id(id):
+    card = YugiCard.query.filter(YugiCard.id == id).first()
+
+    if not card:
+        return {'erro':'card not found'}, 400
+    
+    if request.method == 'DELETE':
+        
+        db.session.delete(card)
+        db.session.commit()
+        
+        return {}, 204

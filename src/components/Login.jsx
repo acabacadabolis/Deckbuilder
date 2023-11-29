@@ -35,8 +35,8 @@ export default function Login() {
             if(response.ok) {
                 response.json().then((data) => {
                     setUser(data)
-                    setMtgDeck(data.mtgdecks)
-                    setYugiDeck(data.yugidecks)
+                    setMtgDeck(data.mtgdecks[0])
+                    setYugiDeck(data.yugidecks[0])
                 })
             }
         })

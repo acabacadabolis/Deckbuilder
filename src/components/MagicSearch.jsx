@@ -19,15 +19,6 @@ export default function MagicSearch(){
 
     const {user, mtgDeck, setMtgDeck} = useOutletContext()
 
-    useEffect(()=>{
-        fetch('http://127.0.0.1:5555/mtgdecks',
-        {credentials:"include"})
-        .then((response) => {
-            if(response.ok) {
-                response.json().then((data) => setDecks(data))
-            }
-        })
-    },[])
     
     return (
         <div>
@@ -36,7 +27,7 @@ export default function MagicSearch(){
                 <input name="search" autoComplete="off" defaultValue={searchTerm}></input>
             </Form>
             <div className=" flex flex-wrap">
-                {cardSearch ? cardSearch.data.map(magicCard => <MagicCard deckid={mtgDeck.id} setMtgDeck={setMtgDeck} key={magicCard.id}{...magicCard} />) : null}
+                {cardSearch ? cardSearch.data.map(magicCard => <MagicCard mtgDeck={mtgDeck} setMtgDeck={setMtgDeck} key={magicCard.id}{...magicCard} />) : null}
             </div>
         </div>
     )

@@ -7,7 +7,7 @@ export async function DeleteCard(id){
         })
 }
 
-export default function MagicCard ({ deckid, setMtgDeck, id ,name, image_uris, card_faces}) {
+export default function MagicCard ({ mtgDeck, setMtgDeck, id ,name, image_uris, card_faces}) {
 
     const [isFaces, setIsFaces] = useState(card_faces)
     const [isFocus, setIsFocus] = useState(false)
@@ -28,24 +28,32 @@ export default function MagicCard ({ deckid, setMtgDeck, id ,name, image_uris, c
             thisCard = {
                 'name':name,
                 'image_uris':image_uris,
-                'deck_id':deckid,
+                'deck_id':mtgDeck.id,
             }
             :
             thisCard = {
                 'name':name,
                 'card_faces':card_faces.length,
                 'image_uris':card_faces,
-                'deck_id':deckid,
+                'deck_id':mtgDeck.id,
             }
-        fetch('http://localhost:3000/magic',{
+        fetch('http://127.0.0.1:5555/mtgcards',{
             method:'POST',
             headers:{
                 'Content-Type':'application/json'
             },
             body:JSON.stringify(thisCard)
         })
-        .then(resp => resp.json)
-        .then(data => setMtgDeck(prevDeck => [...prevDeck, data]))
+        .then((resp) => {
+            if(resp.ok){
+                resp.json().then((data) => {
+                    setMtgDeck(prevDeck => {
+                        prevDeck.cards.push(data)
+                        return prevDeck
+                    })
+                })
+            }
+        })
     }
 
     const displayCard = image_uris ?
