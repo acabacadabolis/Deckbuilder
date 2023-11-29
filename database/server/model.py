@@ -77,7 +77,7 @@ class MtgDeckCard(db.Model, SerializerMixin):
 class MtgCard(db.Model, SerializerMixin):
     __tablename__ = 'mtgcards'
 
-    serialize_rules = ('-card_faces.card','-decks')
+    serialize_rules = ('-card_faces.card','-decks.card')
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
@@ -111,7 +111,7 @@ class YugiDeck (db.Model, SerializerMixin):
 class YugiDeckCard(db.Model, SerializerMixin):
     __tablename__ = 'yugideckcards'
 
-    serialize_rules = ('-yugi_deck.cards','-yugi_card.decks')
+    serialize_rules = ('-yugi_deck.yugi_cards','-yugi_card.yugi_decks')
 
     id = db.Column(db.Integer, primary_key=True)
     deck_id = db.Column(db.Integer, db.ForeignKey('yugidecks.id'))

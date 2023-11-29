@@ -1,5 +1,5 @@
-import React from "react";
-import { Form, useActionData, useLoaderData, useParams } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Form, useActionData, useLoaderData, useOutletContext, useParams } from "react-router-dom";
 import YugiohCard from "./YugiohCard";
 
 export async function YgoSearch ({ request }) {
@@ -17,15 +17,19 @@ export async function YgoSearch ({ request }) {
 export default function YugiohSearch(){
     const {cardSearch, searchTerm} = useLoaderData();
 
+    const { yugiDeck, setUser,setMtgDeck, setYugiDeck} = useOutletContext()
+    
+    
+
     return (
         <div>
-            <Form method="get" className=" border-2 border-red-900" >
+            <Form method="get" className="" >
                     <label htmlFor="search" >Search :</label>
-                    <input name="search" autoComplete="off" defaultValue={searchTerm}></input>
+                    <input name="search" className=" border-2 border-gray-900" autoComplete="off" defaultValue={searchTerm}></input>
                     
             </Form>
-            <div className=" flex shrink flex-wrap">
-                {cardSearch ? cardSearch.data.map(ygoCard => <YugiohCard site="search" key={ygoCard.id}{...ygoCard} />) : null}
+            <div className=" flex flex-wrap">
+                {cardSearch ? cardSearch.data.map(ygoCard => <YugiohCard site="search" deckid={yugiDeck.id} setYugiDeck={setYugiDeck} key={ygoCard.id}{...ygoCard} />) : null}
             </div>
         </div>
     )

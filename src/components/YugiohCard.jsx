@@ -1,16 +1,14 @@
 import { redirect, useActionData, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
-export default function YugiohCard({name, card_images, site}){
+export default function YugiohCard({name, card_images, deckid, setYugiDeck}){
 
     const [isFocus, setIsFocus] = useState(false)
-    const navigate = useNavigate()
-    let addedCard
 
     function handleFocus () {
         setIsFocus(prev => !prev)
     }
-
+    
     function handleBlur () {
         setIsFocus(prev => !prev)
     }
@@ -19,26 +17,37 @@ export default function YugiohCard({name, card_images, site}){
         let thisCard = {}
         
         thisCard = {
-            'name':name,
-            'card_images':card_images,
+                'name':name,
+                'image':card_images[0].image_url_small,
+                'deck_id':deckid,
         }
-            
-        fetch('http://localhost:3000/yugioh',{
+
+        fetch('http://127.0.0.1:5555/ygocards',{
             method:'POST',
             headers:{
                 'Content-Type':'application/json'
             },
             body:JSON.stringify(thisCard)
         })
-        .then(resp => resp.json)
-        .then(data => addedCard=data)
+        .then((resp) => {
+            if(resp.ok){
+                resp.json().then((data) => {
+                    setYugiDeck(prevDeck => {
+                        prevDeck.yugi_cards.push(data)
+                        return prevDeck
+                    })
+                })
+            }
+        })
     }
+    
 
+    // <button onClick={handleDelete} className="invisible group-hover/card:visible bg-lime-500 font-semibold hover:bg-red-600">Remove from Deck</button>
     function handleDelete(){
         fetch(`http://localhost:3000/yugioh/${addedCard.id}`,{
             method:'DELETE'
         })
-        navigate(0)
+        
     }
 
     return (
@@ -47,11 +56,7 @@ export default function YugiohCard({name, card_images, site}){
             onMouseLeave={handleBlur}>
 
             <img className=" max-h-60" src={card_images[0].image_url} alt={name} />
-            {site==="search" ? <button onClick={handleAdd} className=" invisible group-hover/card:visible bg-lime-500 font-semibold hover:bg-red-600">Add to Deck</button> 
-                    :
-                site==="deck"? <button onClick={handleDelete} className="invisible group-hover/card:visible bg-lime-500 font-semibold hover:bg-red-600">Remove from Deck</button>
-                    : 
-                null}
+            <button onClick={handleAdd} className=" invisible group-hover/card:visible bg-lime-500 font-semibold hover:bg-red-600">Add to Deck</button> 
         </div>
     )
 }

@@ -17,14 +17,15 @@ export async function MagSearch ({ request }) {
 export default function MagicSearch(){
     const {cardSearch, searchTerm} = useLoaderData();
 
-    const {user, mtgDeck, setMtgDeck} = useOutletContext()
+    const {user, setUser, setYugiDeck, mtgDeck, setMtgDeck} = useOutletContext()
 
+    
     
     return (
         <div>
-            <Form method="get" className=" border-2 border-red-900" >
+            <Form method="get" className="" >
                 <label htmlFor="search" >Search :</label>
-                <input name="search" autoComplete="off" defaultValue={searchTerm}></input>
+                <input name="search" className=" border-2 border-gray-900" autoComplete="off" defaultValue={searchTerm}></input>
             </Form>
             <div className=" flex flex-wrap">
                 {cardSearch ? cardSearch.data.map(magicCard => <MagicCard mtgDeck={mtgDeck} setMtgDeck={setMtgDeck} key={magicCard.id}{...magicCard} />) : null}

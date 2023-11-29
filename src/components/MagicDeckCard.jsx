@@ -17,7 +17,7 @@ export default function MagicDeckCard ({ deckid, setMtgDeck , card, setRefresh})
         <img src={card.card_faces[0].image} alt={card.name} />
 
     function handleDelete(e){
-        console.log(e.target.id)
+        
         fetch(`http://127.0.0.1:5555/mtgcards/${e.target.id}`,{
             method:'DELETE'
         })

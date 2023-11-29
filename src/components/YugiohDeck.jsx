@@ -1,8 +1,9 @@
-import React from "react";
-import { useLoaderData } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useLoaderData, useOutletContext } from "react-router-dom";
 import MagicCard from "./MagicCard";
 import MagicDeckList from "./MagicDeckList";
 import YugiohCard from "./YugiohCard";
+import YugiohDeckCard from "./YugiohDeckCard";
 
 export async function YgoLoadDeck(){
     let CurrentDeck
@@ -14,14 +15,17 @@ export async function YgoLoadDeck(){
 
 export default function YugiohDeck(){
     const dek = useLoaderData()
+    const [refresh, setRefresh] = useState(null)
+    const {yugiDeck, setMtgDeck, setUser, setYugiDeck} = useOutletContext()
+    
+
+    
+
     return (
         <div className=" flex">
-            <MagicDeckList site="yugioh" deck={dek.CurrentDeck}/>
-            <div className=" flex flex-wrap justify-center">
-                {dek ? 
-                dek.CurrentDeck.map(ygoCard => <YugiohCard site="deck" key={ygoCard.id}{...ygoCard} />) 
-                // dek.CurrentDeck.map(ygoCard => console.log(ygoCard))
-                    : null}
+            <MagicDeckList setRefresh={setRefresh} site="yugioh" deck={yugiDeck.yugi_cards} setYugiDeck={setYugiDeck} />
+            <div className=" flex flex-wrap justify-center content-start">
+                {yugiDeck.yugi_cards.map(ygoCard => <YugiohDeckCard setYugiDeck={setYugiDeck} deckid={yugiDeck.id} setRefresh={setRefresh} key={ygoCard.id}{...ygoCard} />)}
             </div>
         </div>
     )

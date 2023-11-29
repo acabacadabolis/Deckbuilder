@@ -72,6 +72,16 @@ def user_by_id(id):
     elif request.method == 'GET':
         return body.to_dict(), 200
 
+@app.route('/check_session')
+def is_logged_in():
+    user_id = session.get('user_id')
+    user = User.query.filter(User.id == user_id).first()
+
+    if not user:
+        # invalid cookie
+        return {'message': 'invalid session'}, 401
+    return user.to_dict(), 200
+
 @app.route('/mtgdecks')
 def all_mtg_decks():
     user_id = session.get('user_id')
@@ -145,10 +155,10 @@ def all_ygo_decks():
 
 @app.route('/ygocards', methods=['POST'])
 def all_ygo_cards():
-    data = request.json()
+    data = request.get_json()
     try:
         new_card = YugiCard( name = data['name'], image = data['image'])
-        new_deck_card = YugiDeckCard( card = new_card, deck = YugiDeck.query.filter(YugiDeck.id == data['deck_id']).first())
+        new_deck_card = YugiDeckCard( yugi_card = new_card, yugi_deck = YugiDeck.query.filter(YugiDeck.id == data['deck_id']).first())
     except ValueError as e:
         return {'error':str(e)}, 400
     
@@ -169,5 +179,5 @@ def ygo_card_by_id(id):
         
         db.session.delete(card)
         db.session.commit()
-        
+
         return {}, 204

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import MagicCard from "./MagicCard";
 import { Outlet, Link, useOutletContext } from "react-router-dom";
 
@@ -12,7 +12,9 @@ import { Outlet, Link, useOutletContext } from "react-router-dom";
 // }
 
 export default function Magic() {
-    const {user, mtgDeck, setMtgDeck} = useOutletContext()
+    const {user, setUser, setYugiDeck, mtgDeck, setMtgDeck} = useOutletContext()
+    
+    
     
     return (
         <div >
@@ -21,7 +23,7 @@ export default function Magic() {
             </h1>
             <Link className=" text-lg font-semibold mx-6" to={"/Magic/search"}>Search</Link>
             <Link className=" text-lg font-semibold mx-6" to={"/Magic/deck"}>Deck</Link>
-            <Outlet context={{user, mtgDeck, setMtgDeck}} />
+            <Outlet context={{user, setYugiDeck, setUser, mtgDeck, setMtgDeck}} />
             
             
         </div>

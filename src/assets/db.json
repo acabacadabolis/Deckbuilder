@@ -1,6 +1,19 @@
 {
   "magic": [
-    {"name":"Archangel Avacyn // Avacyn, the Purifier","card_faces": 2,"image_uris":[{"image_uris":{"small":"https://cards.scryfall.io/small/front/a/e/ae155ee2-008f-4dc6-82bf-476be7baa224.jpg?1576383667"}},{"image_uris":{"small": "https://cards.scryfall.io/small/back/a/e/ae155ee2-008f-4dc6-82bf-476be7baa224.jpg?1576383667"}}
+    {
+      "name": "Archangel Avacyn // Avacyn, the Purifier",
+      "card_faces": 2,
+      "image_uris": [
+        {
+          "image_uris": {
+            "small": "https://cards.scryfall.io/small/front/a/e/ae155ee2-008f-4dc6-82bf-476be7baa224.jpg?1576383667"
+          }
+        },
+        {
+          "image_uris": {
+            "small": "https://cards.scryfall.io/small/back/a/e/ae155ee2-008f-4dc6-82bf-476be7baa224.jpg?1576383667"
+          }
+        }
       ],
       "id": 1
     }
@@ -47,6 +60,18 @@
         }
       ],
       "id": 4
+    },
+    {
+      "name": "Breaker the Magical Warrior",
+      "card_images": [
+        {
+          "id": 71413901,
+          "image_url": "https://images.ygoprodeck.com/images/cards/71413901.jpg",
+          "image_url_small": "https://images.ygoprodeck.com/images/cards_small/71413901.jpg",
+          "image_url_cropped": "https://images.ygoprodeck.com/images/cards_cropped/71413901.jpg"
+        }
+      ],
+      "id": 5
     }
   ]
 }
