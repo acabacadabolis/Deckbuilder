@@ -43,27 +43,29 @@ export default function Signup(){
     }
 
     return (
-        <div>
-            <h1>SIGNUP</h1>
-            <form className=" grid justify-start text-left"onSubmit={handleSubmit}>
+        <div className=" py-12">
+            <h1 className=" font-semibold text-2xl">SIGNUP</h1>
+            <div className=" py-6 border-gray-950 grid justify-center">
+            <form className=" shadow grid   justify-start text-left"onSubmit={handleSubmit}>
                 <div>
                 <label htmlFor="username">Username:</label>
-                <input name="username" onChange={handleChange} autoComplete="off" type="text" placeholder="Username"></input>
+                <input  name="username" onChange={handleChange} autoComplete="off" type="text" placeholder="Username"></input>
                 </div>
                 <div>
                 <label htmlFor="password">Password:</label>
-                <input name="password" onChange={handleChange} autoComplete="off" type="text" placeholder="Password"></input>
+                <input name="password"  onChange={handleChange} autoComplete="off" type="password" placeholder="Password"></input>
                 </div>
                 <div>
                 <label htmlFor="name">Name:</label>
-                <input name="name" onChange={handleChange} autoComplete="off" type="text" placeholder="Name"></input>
+                <input name="name"  onChange={handleChange} autoComplete="off" type="text" placeholder="Name"></input>
                 </div>
                 <div>
                 <label htmlFor="email">Email:</label>
-                <input name="email" onChange={handleChange} autoComplete="off" type="text" placeholder="Email"></input>
+                <input name="email"  onChange={handleChange} autoComplete="off" type="email" placeholder="Example@example.com"></input>
                 </div>
-                <button type="submit">Submit</button>
+                <button className=" border-2 border-blue-400 hover:bg-blue-300" type="submit">Submit</button>
             </form>
+            </div>
         </div>
     )
 }

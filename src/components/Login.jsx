@@ -38,10 +38,11 @@ export default function Login() {
                     setMtgDeck(data.mtgdecks[0])
                     setYugiDeck(data.yugidecks[0])
                 })
+            setLoginForm(blankForm)
+            navigate("/")
             }
         })
-        setLoginForm(blankForm)
-        navigate("/")
+        
     
     }
     function handleClick(event){
@@ -49,9 +50,10 @@ export default function Login() {
     }
 
     return(
-        <div>
-            <h1>LOGIN</h1>
-            <Form method='post' state={{state:"monkey"}}  className=" grid justify-start text-left"onSubmit={handleSubmit}>
+        <div className=" py-12">
+            <h1 className=" font-semibold text-2xl">LOGIN</h1>
+            <div className=" py-6 border-gray-950 grid shrink justify-center">
+            <Form method='post' state={{state:"monkey"}}  className=" shadow grid justify-start text-left"onSubmit={handleSubmit}>
                 <div>
                 <label htmlFor="username">Username:</label>
                 <input name="username" onChange={handleChange} autoComplete="off" type="text" placeholder="Username"></input>
@@ -60,9 +62,10 @@ export default function Login() {
                 <label htmlFor="password">Password:</label>
                 <input name="password" onChange={handleChange} autoComplete="off" type="password" placeholder="Password"></input>
                 </div>
-                <button type="submit">Submit</button>
+                <button className=" border-2 border-blue-400 hover:bg-blue-300" type="submit">Submit</button>
             </Form>
-            <button onClick={handleClick}>New User</button>
+            <button className=" border-2 border-blue-400 hover:bg-blue-300" onClick={handleClick}>New User</button>
+            </div>
         </div>
     )
   

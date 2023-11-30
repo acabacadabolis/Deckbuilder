@@ -8,9 +8,14 @@ import { Outlet } from 'react-router-dom'
 
 function App() { 
     const [user, setUser]= useState(null)
-    const [mtgDeck, setMtgDeck] = useState([])
-    const [yugiDeck, setYugiDeck] = useState([])
+    const [mtgDeck, setMtgDeck] = useState(null)
+    const [yugiDeck, setYugiDeck] = useState(null)
+    const [site, setSite] = useState(null)
+    let food
 
+    site === 'yugi' ? food = "bg-[url('/public/_3b21f5ac-ca9b-40fe-ba8e-648577115c32.jpg')]" : 
+        site === 'magic'? food = "bg-[url('/public/_de6248e2-0f8b-433b-8cb5-da0e95cb49ac.jpg')]":
+        null
     useEffect(()=>{
         fetch('http://127.0.0.1:5555/check_session',{
             credentials: "include"
@@ -29,11 +34,12 @@ function App() {
 
     return (
     <>
-        <div>
-            <Header user={user} setUser={setUser} setMtgDeck={setMtgDeck} setYugiDeck={setYugiDeck} />
+        <div >
+            <Header user={user} setUser={setUser} setSite={setSite} setMtgDeck={setMtgDeck} setYugiDeck={setYugiDeck} />
             <Outlet context={{user, setUser, mtgDeck, setMtgDeck, yugiDeck, setYugiDeck}} />
             {/* <Magic handleSubmit={handleSubmit} magicCards={magicCards}/> */}
         </div>
+        <div className="bg-[url('/public/default.jpg')]"></div>
     </>
     )
 }

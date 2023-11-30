@@ -61,15 +61,15 @@ export default function MagicDeck() {
             <div>
                 <div>
                     <select defaultValue={mtgDeck.id} onChange={handleChange}>
-                        {user.mtgdecks.length !== 0? user.mtgdecks.map(deck => <option value={deck.id}>{deck.id}</option>):<option value="new deck">New Deck</option>}
+                        {user?user.mtgdecks.length !== 0? user.mtgdecks.map(deck => <option value={deck.id}>{deck.id}</option>):<option value="new deck">New Deck</option>:null}
                     </select>
-                    <button className=" bg-slate-200 border-2 border-gray-800" onClick={handleNewDeck}>New Deck</button>
-                    <button className=" bg-red-500 border-2 border-gray-800" onClick={handleDelDeck}>Del Deck</button>
+                    <button className=" bg-slate-200 border-2 hover:bg-slate-400 border-gray-800" onClick={handleNewDeck}>New Deck</button>
+                    <button className=" bg-red-500 border-2 hover:bg-red-700 border-gray-800" onClick={handleDelDeck}>Del Deck</button>
                 </div>
-                <MagicDeckList setRefresh={setRefresh} deck={mtgDeck.cards} site="magic" setMtgDeck={setMtgDeck} />
+                {mtgDeck ?<MagicDeckList setRefresh={setRefresh} deck={mtgDeck.cards} site="magic" setMtgDeck={setMtgDeck} />:null}
             </div>
             <div className=" flex flex-wrap justify-center content-start">
-                {mtgDeck.cards.map(magicCard => <MagicDeckCard setRefresh={setRefresh} setMtgDeck={setMtgDeck} deckid={mtgDeck.id} key={magicCard.id}{...magicCard} />)}
+                {mtgDeck ? mtgDeck.cards.map(magicCard => <MagicDeckCard setRefresh={setRefresh} setMtgDeck={setMtgDeck} deckid={mtgDeck.id} key={magicCard.id}{...magicCard} />):null}
             </div>
         </div>
     )
