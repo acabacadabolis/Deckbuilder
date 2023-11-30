@@ -32,8 +32,9 @@ export default function Header ({user, setUser, setMtgDeck,setSite, setYugiDeck}
             <Link onClick={settomagic} to={"/Magic"}>Magic</Link>
             <Link onClick={settoyugi} to={"/Yugioh"}>Yugioh</Link>
         </div>
-        <div className="">
-            {user === null?<Link to={"/Login"}>Login</Link>:<Link to={"/"} onClick={handleLogout}>Logout</Link>}
+        <div className=" flex">
+            {user ===null? null:<p className=" px-4">{user.username}</p>}
+            {user === null?<Link className=" px-4" to={"/Login"}>Login</Link>:<Link to={"/"} onClick={handleLogout}>Logout</Link>}
         </div>
         </div>
     )
