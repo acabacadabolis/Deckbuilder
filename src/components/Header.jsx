@@ -1,9 +1,10 @@
 import React from "react";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 
 
 
 export default function Header ({user, setUser, setMtgDeck,setSite, setYugiDeck}) {
+    const navigate = useNavigate()
 
     function handleLogout(event){
         setUser(null)
@@ -12,6 +13,8 @@ export default function Header ({user, setUser, setMtgDeck,setSite, setYugiDeck}
         fetch("http://127.0.0.1:5555/logout", {
             method:'DELETE'
         })
+        setSite(null)
+        navigate("/")
 
     }
 

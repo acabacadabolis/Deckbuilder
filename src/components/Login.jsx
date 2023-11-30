@@ -8,7 +8,7 @@ export default function Login() {
         "password": "",
     }
 
-    const {setMtgDeck, setUser, setYugiDeck} = useOutletContext()
+    const {setMtgDeck, setUser, setSite, setYugiDeck} = useOutletContext()
     const navigate = useNavigate()
     const [loginForm, setLoginForm] = useState(blankForm)
     
@@ -37,6 +37,7 @@ export default function Login() {
                     setUser(data)
                     setMtgDeck(data.mtgdecks[0])
                     setYugiDeck(data.yugidecks[0])
+                    setSite(null)
                 })
             setLoginForm(blankForm)
             navigate("/")

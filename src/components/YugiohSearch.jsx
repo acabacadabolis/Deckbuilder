@@ -24,7 +24,7 @@ export default function YugiohSearch(){
     return (
         <div>
             <Form method="get" className="" >
-                    <label htmlFor="search" >Search :</label>
+                    <label className=" bg-white bg-opacity-50 font-semibold" htmlFor="search" >Search :</label>
                     <input name="search" className=" border-2 border-gray-900" autoComplete="off" defaultValue={searchTerm}></input>
                     
             </Form>

@@ -36,10 +36,10 @@ function App() {
     <>
         <div >
             <Header user={user} setUser={setUser} setSite={setSite} setMtgDeck={setMtgDeck} setYugiDeck={setYugiDeck} />
-            <Outlet context={{user, setUser, mtgDeck, setMtgDeck, yugiDeck, setYugiDeck}} />
+            <Outlet context={{user, setUser, setSite, mtgDeck, setMtgDeck, yugiDeck, setYugiDeck}} />
             {/* <Magic handleSubmit={handleSubmit} magicCards={magicCards}/> */}
         </div>
-        <div className="bg-[url('/public/default.jpg')]"></div>
+        {site?null:<div className="bg-[url('/public/default.jpg')] h-screen"></div>}
     </>
     )
 }
