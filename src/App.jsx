@@ -36,7 +36,9 @@ function App() {
     <>
         <div >
             <Header user={user} setUser={setUser} setSite={setSite} setMtgDeck={setMtgDeck} setYugiDeck={setYugiDeck} />
+            <div>
             <Outlet context={{user, setUser, setSite, mtgDeck, setMtgDeck, yugiDeck, setYugiDeck}} />
+            </div>
             {/* <Magic handleSubmit={handleSubmit} magicCards={magicCards}/> */}
         </div>
         {site?null:<div className="bg-[url('/public/default.jpg')] h-screen"></div>}

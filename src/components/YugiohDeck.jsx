@@ -69,7 +69,7 @@ export default function YugiohDeck(){
         <div className=" flex">
             <div>
                 {user?<select defaultValue={yugiDeck.id} onChange={handleChange}>
-                    {yugiDeck.length > 0 ?user.yugidecks.length !== 0? user.yugidecks.map(deck => <option value={deck.id}>{deck.id}</option>):<option value="new deck">New Deck</option>:null}
+                    {user.yugidecks.length > 0 ?user.yugidecks.length !== 0? user.yugidecks.map(deck => <option value={deck.id}>{deck.id}</option>):<option value="new deck">New Deck</option>:null}
                 </select>:null}
                 <button className=" bg-slate-200 border-2 hover:bg-slate-400 border-gray-800" onClick={handleNewDeck}>New Deck</button>
                 <button className=" bg-red-500 border-2 hover:bg-red-700 border-gray-800" onClick={handleDelDeck}>Del Deck</button>

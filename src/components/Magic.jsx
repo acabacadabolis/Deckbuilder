@@ -12,12 +12,15 @@ import { Outlet, Link, useOutletContext } from "react-router-dom";
 // }
 
 export default function Magic() {
-    const {user, setUser, setYugiDeck, mtgDeck, setMtgDeck} = useOutletContext()
+    const {user, setSite, setUser, setYugiDeck, mtgDeck, setMtgDeck} = useOutletContext()
     
     const [magicRefresh, setMagicRefresh] = useState(null)
     let deck = "/login"
     user ? deck = "/Magic/deck" : deck = "/Login"
     
+    function handleRedirect(){
+        user? null:setSite(null)
+    }
     return (
         <div className="bg-[url('/public/_de6248e2-0f8b-433b-8cb5-da0e95cb49ac.jpg')] h-screen bg-opacity-0">
             {/* <h1 className="text-3xl font-bold underline">
@@ -29,7 +32,7 @@ export default function Magic() {
             </div>
             <div>
                 <Link className=" text-lg border-2 rounded bg-slate-300 hover:bg-slate-500 border-gray-800 font-semibold mx-6" to={"/Magic/search"}>Search</Link>
-                <Link className=" text-lg border-2 rounded bg-slate-300 hover:bg-slate-500 border-gray-800 font-semibold mx-6" to={deck}>Deck</Link>
+                <Link className=" text-lg border-2 rounded bg-slate-300 hover:bg-slate-500 border-gray-800 font-semibold mx-6" onClick={handleRedirect} to={deck}>Deck</Link>
             </div>
             </div>
             <Outlet context={{user, setMagicRefresh, setYugiDeck, setUser, mtgDeck, setMtgDeck}} />
