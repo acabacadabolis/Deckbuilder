@@ -82,7 +82,7 @@ def is_logged_in():
         return {'message': 'invalid session'}, 401
     return user.to_dict(), 200
 
-@app.route('/mtgdecks')
+@app.route('/mtgdecks', methods=['GET','POST'])
 def all_mtg_decks():
     user_id = session.get('user_id')
     user = User.query.filter(User.id == user_id).first()
@@ -90,9 +90,33 @@ def all_mtg_decks():
     if not user:
         # invalid cookie
         return {'message': 'invalid session'}, 401
-    
-    body = [deck.to_dict() for deck in MtgDeck.query.filter(MtgDeck.user_id == user.id).all()]
-    return body, 200
+    if request.method == 'GET':
+        body = [deck.to_dict() for deck in MtgDeck.query.filter(MtgDeck.user_id == user.id).all()]
+        return body, 200
+    elif request.method == 'POST':
+        try:
+            new_deck = MtgDeck(user = user, name="decks")
+        except ValueError as e:
+            return {'error':str(e)}, 400
+        db.session.add(new_deck)
+        db.session.commit()
+
+        return new_deck.to_dict(), 201
+
+
+@app.route('/mtgdecks/<int:id>', methods=['GET', 'DELETE'])
+def mtg_deck_by_id(id):
+    deck = MtgDeck.query.filter(MtgDeck.id == id).first()
+
+    if not deck:
+        return {'error':'Deck not found'}, 404
+    if request.method == 'GET':
+        return deck.to_dict(), 200
+    elif request.method == 'DELETE':
+        db.session.delete(deck)
+        db.session.commit()
+
+        return {}, 204
 
 @app.route('/mtgcards', methods=['POST'])
 def all_mtg_cards():
@@ -141,7 +165,7 @@ def mtg_card_by_id(id):
         
         return {}, 204
     
-@app.route('/ygodecks')
+@app.route('/ygodecks', methods=['GET','POST'])
 def all_ygo_decks():
     user_id = session.get('user_id')
     user = User.query.filter(User.id == user_id).first()
@@ -150,8 +174,35 @@ def all_ygo_decks():
         # invalid cookie
         return {'message': 'invalid session'}, 401
     
-    body = [deck.to_dict() for deck in YugiDeck.query.filter(YugiDeck.user_id == user.id).all()]
-    return body, 200
+    if request.method == 'GET':
+        body = [deck.to_dict() for deck in YugiDeck.query.filter(YugiDeck.user_id == user.id).all()]
+        return body, 200
+    elif request.method == 'POST':
+        try:
+            new_deck = YugiDeck(user = user, name = 'decks')
+        except ValueError as e:
+            return {'error':str(e)}, 400
+        db.session.add(new_deck)
+        db.session.commit()
+
+        return new_deck.to_dict(), 201
+
+
+
+@app.route('/ygodecks/<int:id>', methods=['GET', 'DELETE'])
+def ygo_deck_by_id(id):
+    deck = YugiDeck.query.filter(YugiDeck.id == id).first()
+
+    if not deck:
+        return {'error':'Deck not found'}, 404
+    
+    if request.method == 'GET':
+        return deck.to_dict(), 200
+    elif request.method == 'DELETE':
+        db.session.delete(deck)
+        db.session.commit()
+
+        return {}, 204
 
 @app.route('/ygocards', methods=['POST'])
 def all_ygo_cards():

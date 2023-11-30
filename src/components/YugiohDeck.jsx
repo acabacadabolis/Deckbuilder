@@ -16,14 +16,65 @@ export async function YgoLoadDeck(){
 export default function YugiohDeck(){
     const dek = useLoaderData()
     const [refresh, setRefresh] = useState(null)
-    const {yugiDeck, setMtgDeck, setUser, setYugiDeck} = useOutletContext()
+    const {yugiDeck, user, setMagicRefresh, setMtgDeck, setUser, setYugiDeck} = useOutletContext()
     
 
-    
+    function handleChange(e){
+        fetch(`http://127.0.0.1:5555/ygodecks/${e.target.value}`)
+        .then((response) => {
+            if(response.ok) {
+                response.json().then((data)=>{
+                    setYugiDeck(data)
+                    setMagicRefresh(e.target.id)
+                })
+            }
+        })
+    }
+
+    function handleNewDeck(){
+        fetch(`http://127.0.0.1:5555/ygodecks`, {
+            method:'POST',
+            credentials: "include",
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify({'name':"food"})
+        })
+        .then((response) => {
+            if(response.ok) {
+                response.json().then((data)=>{
+                    setYugiDeck(data)
+                    setUser(prev =>{
+                        prev.yugidecks.push(data)
+                        return prev
+                    })
+                    setMagicRefresh(data.id)
+                })
+            }
+        })
+    }
+
+    function handleDelDeck(){
+        fetch(`http://127.0.0.1:5555/ygodecks/${yugiDeck.id}`,{
+            method:'DELETE'
+        })
+        .then((response) => {
+            if(response.ok) {
+                    setYugiDeck(user.yugidecks[0])
+            }
+        })
+    }
 
     return (
         <div className=" flex">
-            <MagicDeckList setRefresh={setRefresh} site="yugioh" deck={yugiDeck.yugi_cards} setYugiDeck={setYugiDeck} />
+            <div>
+                <select defaultValue={yugiDeck.id} onChange={handleChange}>
+                    {user.yugidecks.length !== 0? user.yugidecks.map(deck => <option value={deck.id}>{deck.id}</option>):<option value="new deck">New Deck</option>}
+                </select>
+                <button className=" bg-slate-200 border-2 border-gray-800" onClick={handleNewDeck}>New Deck</button>
+                <button className=" bg-red-500 border-2 border-gray-800" onClick={handleDelDeck}>Del Deck</button>
+                <MagicDeckList setRefresh={setRefresh} site="yugioh" deck={yugiDeck.yugi_cards} setYugiDeck={setYugiDeck} />
+            </div>
             <div className=" flex flex-wrap justify-center content-start">
                 {yugiDeck.yugi_cards.map(ygoCard => <YugiohDeckCard setYugiDeck={setYugiDeck} deckid={yugiDeck.id} setRefresh={setRefresh} key={ygoCard.id}{...ygoCard} />)}
             </div>

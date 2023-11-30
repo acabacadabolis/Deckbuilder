@@ -20,7 +20,7 @@ export default function MagicDeckList({deck, setMtgDeck, setRefresh, setYugiDeck
     }
     
     function handleYgoDelete(e){
-        console.log(e.target.id)
+        
         fetch(`http://127.0.0.1:5555/ygocards/${e.target.id}`,{
             method:'DELETE'
         })

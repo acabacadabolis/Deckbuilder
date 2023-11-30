@@ -58,7 +58,7 @@ export default function Login() {
                 </div>
                 <div>
                 <label htmlFor="password">Password:</label>
-                <input name="password" onChange={handleChange} autoComplete="off" type="text" placeholder="Password"></input>
+                <input name="password" onChange={handleChange} autoComplete="off" type="password" placeholder="Password"></input>
                 </div>
                 <button type="submit">Submit</button>
             </Form>

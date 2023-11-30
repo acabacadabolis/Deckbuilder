@@ -13,12 +13,12 @@ export default function Header ({user, setUser}) {
     }
 
     return(
-        <div className="flex m-auto">
+        <div className="flex justify-between ">
         <div className="flex space-x-4 justify-center">
             <Link to={"/Magic"}>Magic</Link>
             <Link to={"/Yugioh"}>Yugioh</Link>
         </div>
-        <div className=" text-right">
+        <div className="">
             {user === null?<Link to={"/Login"}>Login</Link>:<Link to={"/"} onClick={handleLogout}>Logout</Link>}
         </div>
         </div>
